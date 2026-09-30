@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Contratos Públicos 2024</h1>
+
+  <!-- Barra de navegação com botões -->
+  <nav>
+    <button><a href="/">Contratos</a></button>
+    <button><a href="/entidades">Entidades</a></button>
+    <button><a href="/tipos-de-procedimento">Tipo de Procedimento</a></button>
+    <button><a href="/datas">Datas</a></button>
+    <button><a href="/locais">Locais</a></button>
+    <button><a href="/questoes">Questões</a></button>
+    <button><a href="/Read Me">Read Me</a></button>
+  </nav>
+
+  <!-- Título de contratos -->
+  <h2>Contratos</h2>
+
+  <!-- Motor de pesquisa -->
+
+
+  <form action="/pesquisar" method="get">
+    <label for="id_contrato">ID do Contrato:</label>
+    <input type="text" id="id_contrato" name="id_contrato" required>
+    <button type="submit">Pesquisar</button>
+  </form>
+
+
+  <!-- Motor de pesquisa por Objeto do Contrato -->
+  <form method="get" action="/pesquisar-objeto">
+    <label for="objeto_contrato">Objeto do Contrato:</label>
+    <input type="text" id="objeto_contrato" name="objeto_contrato">
+    <button type="submit">Pesquisar</button>
+  </form>
+
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID do Contrato</th>
+        <th>Objeto do Contrato</th>
+        <!-- Adicione mais colunas conforme necessário -->
+      </tr>
+    </thead>
+    <tbody>
+      {% for contrato in contratos %}
+        <tr>
+          <td><a href="/detalhes/{{ contrato.id }}"><button>{{ contrato.id }}</button></a></td>
+          <td>{{ contrato.objeto_contrato }}</td>
+          <!-- Adicione mais dados conforme necessário -->
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

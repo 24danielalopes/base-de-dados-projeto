@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 style="text-align: center;">Locais dos Contratos</h1>
+
+  <!-- Barra de navegação com botões -->
+  <nav style="text-align: center; margin-bottom: 20px;">
+    <button><a href="/">Contratos</a></button>
+    <button><a href="/entidades">Entidades</a></button>
+    <button><a href="/tipos-de-procedimento">Tipo de Procedimento</a></button>
+    <button><a href="/datas">Datas</a></button>
+    <button><a href="/locais">Locais</a></button>
+    <button><a href="/questoes">Questões</a></button>
+    <button><a href="/Read Me">Read Me</a></button>
+  </nav>
+
+  <h2 style="text-align: center;">Filtrar Contratos por Local</h2>
+
+  <!-- Formulário de filtros -->
+  <form method="GET" action="/locais" style="text-align: center;">
+      <!-- Filtro por País -->
+      <label for="pais">Escolha um país:</label>
+      <select name="pais" id="pais" onchange="atualizarDistritos()">
+          <option value="">Selecione um país</option>
+          <option value="Alemanha">Alemanha</option>
+          <option value="Arábia Saudita">Arábia Saudita</option>
+          <option value="Bélgica">Bélgica</option>
+          <option value="Cabo Verde">Cabo Verde</option>
+          <option value="Emiratos Árabes Unidos">Emiratos Árabes Unidos</option>
+          <option value="Espanha">Espanha</option>
+          <option value="Estados Unidos">Estados Unidos</option>
+          <option value="França">França</option>
+          <option value="Hungria">Hungria</option>
+          <option value="Indonésia">Indonésia</option>
+          <option value="Panamá">Panamá</option>
+          <option value="Países Baixos">Países Baixos</option>
+          <option value="Portugal">Portugal</option>
+          <option value="Quénia">Quénia</option>
+          <option value="Reino Unido">Reino Unido</option>
+          <option value="Suiça">Suiça</option>
+          <option value="Áustria">Áustria</option>
+      </select>
+
+      <!-- Filtro por Distrito -->
+      <label for="distrito">Escolha um distrito:</label>
+      <select name="distrito" id="distrito" onchange="atualizarConcelhos()">
+          <option value="">Selecione um distrito</option>
+          <!-- As opções serão preenchidas dinamicamente -->
+      </select>
+
+      <!-- Filtro por Concelho -->
+      <label for="concelho">Escolha um concelho:</label>
+      <select name="concelho" id="concelho">
+          <option value="">Selecione um concelho</option>
+          <!-- As opções serão preenchidas dinamicamente -->
+      </select>
+
+      <button type="submit">Filtrar</button>
+  </form>
+
+  <div id="resultados" style="text-align: center; margin-top: 40px;">
+      <h2>Lista de Contratos</h2>
+      <table border="1" style="margin: 0 auto; border-collapse: collapse; margin-top: 20px;">
+          <tr>
+              <th>ID do Contrato</th>
+              <th>País</th>
+              <th>Distrito</th>
+              <th>Concelho</th>
+              <th>Objetivo do Contrato</th>
+          </tr>
+          {% for contrato in contratos %}
+          <tr>
+              <td><a href="/detalhes/{{ contrato.id }}">{{ contrato.id }}</a></td>
+              <td>{{ contrato.pais }}</td>
+              <td>{{ contrato.distrito }}</td>
+              <td>{{ contrato.concelho }}</td>
+              <td>{{ contrato.oc }}</td>
+          </tr>
+          {% endfor %}
+      </table>
+  </div>
+
+  <script>
+      function atualizarDistritos() {
+          var pais = document.getElementById('pais').value;
+          var distritoSelect = document.getElementById('distrito');
+
+          distritoSelect.innerHTML = '<option value="">Selecione um distrito</option>';
+
+          if (pais) {
+              fetch('/api/distritos?pais=' + pais)
+                  .then(response => response.json())
+                  .then(data => {
+                      data.distritos.forEach(distrito => {
+                          var option = document.createElement('option');
+                          option.value = distrito;
+                          option.text = distrito;
+                          distritoSelect.appendChild(option);
+                      });
+                  })
+                  .catch(error => console.error('Erro ao buscar distritos:', error));
+          }
+      }
+
+      function atualizarConcelhos() {
+          var distrito = document.getElementById('distrito').value;
+          var concelhoSelect = document.getElementById('concelho');
+
+          concelhoSelect.innerHTML = '<option value="">Selecione um concelho</option>';
+
+          if (distrito) {
+              fetch('/api/concelhos?distrito=' + distrito)
+                  .then(response => response.json())
+                  .then(data => {
+                      data.concelhos.forEach(concelho => {
+                          var option = document.createElement('option');
+                          option.value = concelho;
+                          option.text = concelho;
+                          concelhoSelect.appendChild(option);
+                      });
+                  })
+                  .catch(error => console.error('Erro ao buscar concelhos:', error));
+          }
+      }
+  </script>
+
+{% endblock %}

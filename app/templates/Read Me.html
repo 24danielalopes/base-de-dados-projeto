@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Contratos Públicos 2024</h1>
+
+<!-- Barra de navegação com botões -->
+<nav>
+  <button><a href="/">Contratos</a></button>
+  <button><a href="/entidades">Entidades</a></button>
+  <button><a href="/tipos-de-procedimento">Tipo de Procedimento</a></button>
+  <button><a href="/datas">Datas</a></button>
+  <button><a href="/locais">Locais</a></button>
+  <button><a href="/questoes">Questões</a></button>
+  <button><a href="/Read Me">Read Me</a></button>
+</nav>
+
+  <div style="margin: 0 100px; text-align: justify;">
+    <h1 style="text-align: center;">Bem-vindo ao Projeto de Contratos Públicicos 2024</h1>
+
+    <p>No âmbito da unidade curricular <strong>CC2005 - Base de Dados</strong>, foi-nos proposto aplicar os conceitos aprendidos ao longo do primeiro semestre. O projeto consistiu na especificação de um modelo UML, a sua tradução para um modelo relacional, e a criação, povoamento e interrogação de uma base de dados utilizando a linguagem SQL. Como produto final, foi solicitada a construção de um site para apresentar e consultar os dados.</p>
+
+    <p>O nosso grupo - <strong>G8H</strong> - é composto pelos seguintes elementos:</p>
+
+    <ul style="list-style: none; padding: 0; text-align: center;">
+      <li>Beatriz Fernandes Barracho (n.º 202205471)</li>
+      <li>Daniela Rodrigues de Oliveira Lopes (n.º 202205418)</li>
+      <li>Rita Esperanço Mota (n.º 202205100)</li>
+      <li>Rita Sampaio Ferreira (n.º 202205015)</li>
+    </ul>
+
+    <p>O tema atribuído ao nosso projeto foi <strong>Contratos Públicicos 2024</strong>. A nossa base de dados é constituída pelos contratos públicos celebrados nos primeiros dois meses de 2024, contendo um total de 217.498 registos, relativos a contratos não apenas em Portugal, mas também em outros países.</p>
+
+    <h2 style="text-align: center;">Introdução ao Tema</h2>
+
+    <p>Um contrato é um acordo formal entre duas ou mais partes. Em contratos públicos, uma das partes é o adjudicatário, responsável por fornecer um serviço ou produto, enquanto a outra parte é o adjudicante, ou seja, a entidade que solicita o serviço.</p>
+
+    <p>Para que um contrato público seja formalizado, é necessário, primeiramente, que seja identificada uma necessidade específica. Esta necessidade é descrita no objeto do contrato, onde são definidos parâmetros como o valor, o tipo de contrato, os critérios de execução, entre outros. A informação sobre o contrato é então publicada em plataformas como a <abbr title="Base.gov"><a href="https://www.base.gov.pt/base4">Base.gov</a></abbr> ou em outras entidades competentes, garantindo a transparência do processo e oferecendo a oportunidade de participação para todos os interessados, com a definição de prazos e critérios para apresentação de propostas.</p>
+
+    <p>Após o recebimento das propostas, estas são avaliadas, e o adjudicatário é escolhido com base nos critérios estabelecidos. Em seguida, o contrato é formalizado e celebrado, iniciando-se a sua execução conforme os termos acordados.</p>
+  </div>
+
+  <!-- Contêiner de Confetes -->
+  <div id="confetti-container"></div>
+
+  <!-- Script para a animação de confetes -->
+  <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          confetti({
+              particleCount: 200,
+              spread: 160,
+              startVelocity: 30,
+              origin: { x: 0.5, y: 0.5 }
+          });
+      });
+
+      function confetti(options) {
+          const duration = (options.duration || 2) * 1000;
+          const animationEnd = Date.now() + duration;
+          const defaults = {
+              particleCount: 100,
+              angle: 90,
+              spread: 55,
+              startVelocity: 25,
+              ticks: 200,
+              origin: {
+                  x: 0.5,
+                  y: 0.5
+              }
+          };
+
+          function random(min, max) {
+              return Math.random() * (max - min) + min;
+          }
+
+          function createParticle(x, y, angle, velocity) {
+              const particle = document.createElement('div');
+              particle.classList.add('confetti');
+              particle.style.backgroundColor = colors[random(0, colors.length - 1)];
+              document.body.appendChild(particle);
+
+              const tilt = random(10, -10);
+              const angle2D = random(0, 360);
+              const delay = (Math.random() - 0.5) * 300;
+
+              particle.style.width = '10px';
+              particle.style.height = '10px';
+              particle.style.position = 'fixed';
+              particle.style.zIndex = '1000';
+              particle.style.top = `calc(${y * 100}% - 5px)`;
+              particle.style.left = `calc(${x * 100}% - 5px)`;
+              particle.style.transform = `rotate(${angle2D}deg)`;
+              particle.style.opacity = '0';
+
+              setTimeout(() => {
+                  particle.style.transition = `transform ${duration}ms ease-out, top ${duration}ms ease-out, left ${duration}ms ease-out, opacity 1000ms ease-out`;
+                  particle.style.transform = `rotate(${tilt}deg)`;
+                  particle.style.top = `calc(${(y + (Math.random() * 2 - 1) * 2) * 100}% - 5px)`;
+                  particle.style.left = `calc(${(x + (Math.random() * 2 - 1) * 2) * 100}% - 5px)`;
+                  particle.style.opacity = '1';
+              }, delay);
+
+              setTimeout(() => {
+                  particle.remove();
+              }, duration + delay);
+          }
+
+          const colors = ['#0000FF', '#1E90FF', '#00BFFF', '#87CEFA', '#ADD8E6', '#B0E0E6', '#AFEEEE'];
+
+          (function frame() {
+              const timeLeft = animationEnd - Date.now();
+              const ticks = Math.max(200, 500 / Math.log(timeLeft));
+
+              for (let i = 0; i < options.particleCount; i++) {
+                  createParticle(options.origin.x, options.origin.y, random(55, 125), random(15, 30));
+              }
+
+              if (timeLeft > 0) {
+                  requestAnimationFrame(frame);
+              }
+          }());
+      }
+  </script>
+
+  <!-- Estilos CSS para Confetes -->
+  <style>
+      .confetti {
+          position: fixed;
+          pointer-events: none;
+          width: 10px;
+          height: 10px;
+          opacity: 0;
+      }
+      .confetti:nth-child(odd) { background-color: #0000FF; }
+      .confetti:nth-child(even) { background-color: #1E90FF; }
+      .confetti:nth-child(3n) { background-color: #00BFFF; }
+      .confetti:nth-child(3n+1) { background-color: #87CEFA; }
+      .confetti:nth-child(4n) { background-color: #ADD8E6; }
+      .confetti:nth-child(4n+1) { background-color: #B0E0E6; }
+      .confetti:nth-child(5n) { background-color: #AFEEEE; }
+  </style>
+
+{% endblock %}

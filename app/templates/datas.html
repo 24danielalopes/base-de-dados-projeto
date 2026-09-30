@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Contratos Públicos 2024</h1>
+
+  <!-- Barra de navegação com botões -->
+  <nav>
+    <button><a href="/">Contratos</a></button>
+    <button><a href="/entidades">Entidades</a></button>
+    <button><a href="/tipos-de-procedimento">Tipo de Procedimento</a></button>
+    <button><a href="/datas">Datas</a></button>
+    <button><a href="/locais">Locais</a></button>
+    <button><a href="/questoes">Questões</a></button>
+    <button><a href="/Read Me">Read Me</a></button>
+  </nav>
+
+  <h2>Escolha uma Data</h2>
+  <nav>
+    <button onclick="window.location.href='/data_publicacao'">Data de Publicação</button>
+    <button onclick="window.location.href='/data_celebracao'">Data de Celebração</button>
+  </nav>
+
+{% endblock %}

@@ -1,0 +1,273 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Contratos Públicos 2024</h1>
+
+  <!-- Barra de navegação com botões -->
+  <nav>
+    <button><a href="/">Contratos</a></button>
+    <button><a href="/entidades">Entidades</a></button>
+    <button><a href="/tipos-de-procedimento">Tipo de Procedimento</a></button>
+    <button><a href="/datas">Datas</a></button>
+    <button><a href="/locais">Locais</a></button>
+    <button><a href="/questoes">Questões</a></button>
+    <button><a href="/Read Me">Read Me</a></button>
+  </nav>
+
+  <div style="text-align: center;">
+      <h2>Questões</h2>
+
+      <h3>1. Qual o contrato de maior valor? Quem o adjudicou e quem o realizou?</h3>
+
+      <table border="1" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+        <tr>
+          <th>ID do Contrato</th>
+          <th>Valor do Contrato (€)</th>
+          <th>Adjudicante</th>
+          <th>Adjudicatário</th>
+        </tr>
+        {% if pergunta1 %}
+        <tr>
+          <td>{{ pergunta1[0] }}</td>
+          <td>{{ pergunta1[1] }}</td>
+          <td>{{ pergunta1[2] }}</td>
+          <td>{{ pergunta1[3] }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="4">Nenhum resultado encontrado.</td>
+        </tr>
+        {% endif %}
+      </table>
+
+      <!-- Espaço entre perguntas -->
+      <div style="margin-top: 40px;"></div>
+
+      <h3>2. Quais são os 5 distritos em Portugal onde foram realizados mais contratos?</h3>
+
+      <table border="1" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+        <tr>
+          <th>Distrito</th>
+          <th>Número de Contratos</th>
+        </tr>
+        {% if pergunta2 %}
+        {% for distrito in pergunta2 %}
+        <tr>
+          <td>{{ distrito.distrito }}</td>
+          <td>{{ distrito.contratos }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+          <td colspan="2">Nenhum resultado encontrado.</td>
+        </tr>
+        {% endif %}
+      </table>
+
+      <!-- Espaço entre perguntas -->
+      <div style="margin-top: 40px;"></div>
+
+      <h3>3. Quais são os CPVs mais comuns entre os contratos?</h3>
+
+      <table border="1" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+        <tr>
+          <th>ID do CPV</th>
+          <th>Descrição</th>
+          <th>Quantidade de Contratos</th>
+        </tr>
+        {% if pergunta3 %}
+        {% for cpv in pergunta3 %}
+        <tr>
+          <td>{{ cpv.cpv_id }}</td>
+          <td>{{ cpv.descricao }}</td>
+          <td>{{ cpv.quantidade_contratos }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+          <td colspan="3">Nenhum resultado encontrado.</td>
+        </tr>
+        {% endif %}
+      </table>
+
+      <!-- Espaço entre perguntas -->
+      <div style="margin-top: 40px;"></div>
+
+      <h3>4. Qual a quantidade de contratos entre um par adjudicante e adjudicatário?</h3>
+
+      <table border="1" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+        <tr>
+          <th>Adjudicante</th>
+          <th>Adjudicatário</th>
+          <th>Quantidade de Contratos</th>
+        </tr>
+        {% if pergunta4 %}
+        {% for contrato in pergunta4 %}
+        <tr>
+          <td>{{ contrato.adjudicante }}</td>
+          <td>{{ contrato.adjudicatario }}</td>
+          <td>{{ contrato.quantidade_contratos }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+          <td colspan="3">Nenhum resultado encontrado.</td>
+        </tr>
+        {% endif %}
+      </table>
+
+      <!-- Espaço entre perguntas -->
+      <div style="margin-top: 40px;"></div>
+
+      <h3>5. Quais as 5 maiores médias de contratos celebrados pelo adjudicante?</h3>
+
+      <table border="1" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+        <tr>
+          <th>Adjudicante</th>
+          <th>Valor Médio dos Contratos (€)</th>
+        </tr>
+        {% if pergunta5 %}
+        {% for contrato in pergunta5 %}
+        <tr>
+          <td>{{ contrato.adjudicante }}</td>
+          <td>{{ contrato.valor_medio_contrato }} €</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+          <td colspan="2">Nenhum resultado encontrado.</td>
+        </tr>
+        {% endif %}
+      </table>
+
+      <!-- Espaço entre perguntas -->
+      <div style="margin-top: 40px;"></div>
+
+      <h3>6. Quantos contratos centralizados e não centralizados foram realizados?</h3>
+
+      <table border="1" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+        <tr>
+          <th>Tipo de Procedimento</th>
+          <th>Quantidade</th>
+        </tr>
+        {% if pergunta6 %}
+        <tr>
+          <td>Centralizados</td>
+          <td>{{ pergunta6[0].centralizados }}</td>
+        </tr>
+        <tr>
+          <td>Não Centralizados</td>
+          <td>{{ pergunta6[0].nao_centralizados }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="2">Nenhum resultado encontrado.</td>
+        </tr>
+        {% endif %}
+      </table>
+      <!-- Espaço entre perguntas -->
+      <div style="margin-top: 40px;"></div>
+
+      <h3>7. Em que dia foi publicado o maior número de contratos?</h3>
+
+      <table border="1" style="margin: 0 auto; border-collapse: collapse; margin-top: 20px;">
+        <tr>
+          <th>Ano</th>
+          <th>Mês</th>
+          <th>Dia</th>
+          <th>Quantidade de Contratos</th>
+        </tr>
+        {% if pergunta7 %}
+        <tr>
+          <td>{{ pergunta7.ano }}</td>
+          <td>{{ pergunta7.mes }}</td>
+          <td>{{ pergunta7.dia }}</td>
+          <td>{{ pergunta7.quantidade }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="4">Nenhum resultado encontrado.</td>
+        </tr>
+        {% endif %}
+      </table>
+
+      <!-- Espaço entre perguntas -->
+      <div style="margin-top: 40px;"></div>
+
+      <h3>8. Quais são os contratos que apresentam acordo quadro? (5 exemplos)</h3>
+
+      <table border="1" style="margin: 0 auto; border-collapse: collapse; margin-top: 20px;">
+        <tr>
+          <th>ID do Contrato</th>
+          <th>Objetivo do Contrato</th>
+          <th>Adjudicante</th>
+        </tr>
+        {% if pergunta8 %}
+        {% for contrato in pergunta8 %}
+        <tr>
+          <td>{{ contrato.id }}</td>
+          <td>{{ contrato.objeto_contrato }}</td>
+          <td>{{ contrato.designacao }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+          <td colspan="3">Nenhum resultado encontrado.</td>
+        </tr>
+        {% endif %}
+      </table>
+
+      <!-- Espaço entre perguntas -->
+      <div style="margin-top: 40px;"></div>
+
+      <h3>9. Quais são os diferentes tipos de contratos e a quantidade de cada um?</h3>
+
+      <table border="1" style="margin: 0 auto; border-collapse: collapse; margin-top: 20px;">
+        <tr>
+          <th>Tipo de Contrato</th>
+          <th>Quantidade</th>
+        </tr>
+        {% if pergunta9 %}
+        {% for tipo in pergunta9 %}
+        <tr>
+          <td>{{ tipo.tipo }}</td>
+          <td>{{ tipo.quantidade }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+          <td colspan="2">Nenhum resultado encontrado.</td>
+        </tr>
+        {% endif %}
+      </table>
+
+      <!-- Espaço entre perguntas -->
+      <div style="margin-top: 40px;"></div>
+
+      <h3>10. Quais são os adjudicantes que celebram mais contratos em cada tipo de contrato?</h3>
+
+      <table border="1" style="margin: 0 auto; border-collapse: collapse; margin-top: 20px;">
+        <tr>
+          <th>Tipo de Contrato</th>
+          <th>Adjudicante</th>
+          <th>Quantidade de Contratos</th>
+        </tr>
+        {% if pergunta10 %}
+        {% for contrato in pergunta10 %}
+        <tr>
+          <td>{{ contrato.tipo_contrato }}</td>
+          <td>{{ contrato.adjudicante }}</td>
+          <td>{{ contrato.quantidade }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+          <td colspan="3">Nenhum resultado encontrado.</td>
+        </tr>
+        {% endif %}
+      </table>
+
+  </div>
+
+{% endblock %}
+

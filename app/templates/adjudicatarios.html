@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Contratos Públicos 2024</h1>
+
+  <!-- Barra de navegação com botões -->
+  <nav>
+    <button><a href="/">Contratos</a></button>
+    <button><a href="/entidades">Entidades</a></button>
+    <button><a href="/tipos-de-procedimento">Tipo de Procedimento</a></button>
+    <button><a href="/datas">Datas</a></button>
+    <button><a href="/locais">Locais</a></button>
+    <button><a href="/questoes">Questões</a></button>
+    <button><a href="/Read Me">Read Me</a></button>
+  </nav>
+
+  <h2>Adjudicatários</h2>
+
+  <!-- Formulário de pesquisa -->
+  <form method="POST" action="/adjudicatarios">
+    <label for="nif">Pesquisar NIF:</label>
+    <input type="text" id="nif" name="nif" placeholder="Digite o NIF" value="{{ nif_pesquisado }}">
+    <button type="submit">Pesquisar</button>
+  </form>
+
+  <table border="1" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+    <tr>
+      <th>NIF</th>
+      <th>Entidade</th>
+      <th>Tipo Jurídico</th>
+      <th>IDs Contratos</th>
+    </tr>
+
+    {% for adj in adjudicatarios %}
+      <tr>
+        <td>{{ adj.nif }}</td>
+        <td>{{ adj.designacao }}</td>
+        <td>{{ adj.tipo_juridico }}</td>
+        <td style="white-space: pre-line;">
+          {% if adj.ids %}
+            {% for contrato_id in adj.ids.split(',') %}
+              <a href="/detalhes/{{ contrato_id }}">
+                <button type="button">{{ contrato_id }}</button>
+              </a><br>
+            {% endfor %}
+          {% else %}
+            Nenhum contrato associado
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+
+{% endblock %}

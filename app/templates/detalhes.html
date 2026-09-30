@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Contratos Públicos 2024</h1>
+
+<!-- Barra de navegação com botões -->
+<nav>
+  <button><a href="/">Contratos</a></button>
+  <button><a href="/entidades">Entidades</a></button>
+  <button><a href="/tipos-de-procedimento">Tipo de Procedimento</a></button>
+  <button><a href="/datas">Datas</a></button>
+  <button><a href="/locais">Locais</a></button>
+  <button><a href="/questoes">Questões</a></button>
+  <button><a href="/Read Me">Read Me</a></button>
+</nav>
+
+<h2>Detalhes do Contrato</h2>
+
+<table border="1" style="width: 100%; border-collapse: collapse;">
+  <tr>
+    <th style="text-align: left; padding: 8px;">Designação</th>
+    <th style="text-align: left; padding: 8px;">Conteúdo</th>
+  </tr>
+  <tr>
+    <td>ID do Contrato</td>
+    <td>{{ contrato.id }}</td>
+  </tr>
+  <tr>
+    <td>Objeto do Contrato</td>
+    <td>{{ contrato.objeto_contrato }}</td>
+  </tr>
+  <tr>
+    <td>Tipo de Contrato</td>
+    <td>{% for tipo in tipos %}
+    {{ tipo }}{% if not loop.last %}<br> {% endif %}
+    {% endfor %}</td>
+  <tr>
+  <tr>
+    <td>Locais</td>
+    <td><a href="/locais/{{ contrato.id }}">Ver Locais</a></td>
+  </tr>
+  <tr>
+    <td>Preço</td>
+    <td>{{ preco }} €</td>
+  </tr>
+  <tr>
+    <td>Adjudicante</td>
+    <td><a href="/adjudicante/{{ contrato.id }}">Ver Adjudicante</a></td>
+  </tr>
+  <tr>
+    <td>Adjudicatários</td>
+    <td><a href="/adjudicatarios/{{ contrato.id }}">Ver Adjudicatários</a></td>
+  </tr>
+  <tr>
+    <td>Data de Publicação</td>
+    <td>{{ data_publicacao.dia }} / {{ data_publicacao.mes }} / {{ data_publicacao.ano }}</td>
+  </tr>
+  <tr>
+    <td>Data de Celebração</td>
+    <td>{{ data_celebracao.dia }} / {{ data_celebracao.mes }} / {{ data_celebracao.ano }}</td>
+  </tr>
+    <td>Prazo de Execução</td>
+    <td>{{ prazo_execucao }}</td>
+  </tr>
+  <tr>
+    <td>Tipo de Procedimento</td>
+    <td>{{ tipo_procedimento }}</td>
+  </tr>
+  <tr>
+  <tr>
+    <td>Procedimento Centralizado</td>
+    <td>{{ procedimento_centralizado }}</td>
+  </tr>
+  <tr>
+    <td>CPV</td>
+    <td><a href="/cpv/{{ contrato.id }}">Ver CPV</a></td>
+  </tr>
+  <tr>
+    <td>Acordo do Quadro</td>
+    <td>{{ acordo_quadro.descr_acordo_quadro }}</td>
+  </tr>
+  <tr>
+    <td>Fundamentação</td>
+    <td>{{ fundamentacao.fundamentacao }}</td>
+  </tr>
+</table>
+
+{% endblock %}

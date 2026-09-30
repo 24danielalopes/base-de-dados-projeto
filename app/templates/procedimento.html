@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Contratos Públicos 2024</h1>
+
+  <!-- Barra de navegação com botões -->
+  <nav>
+    <button><a href="/">Contratos</a></button>
+    <button><a href="/entidades">Entidades</a></button>
+    <button><a href="/tipos-de-procedimento">Tipo de Procedimento</a></button>
+    <button><a href="/datas">Datas</a></button>
+    <button><a href="/locais">Locais</a></button>
+    <button><a href="/questoes">Questões</a></button>
+    <button><a href="/Read Me">Read Me</a></button>
+  </nav>
+
+<h2>Filtrar Contratos</h2>
+<form method="get" action="/tipos-de-procedimento" class="filter-form">
+    <fieldset>
+        <legend>Tipo de Procedimento</legend>
+
+        <label><input type="checkbox" name="tipo_procedimento" value="Consulta Prévia"> Consulta Prévia</label><br>
+        <label><input type="checkbox" name="tipo_procedimento" value="Concurso público"> Concurso público</label><br>
+        <label><input type="checkbox" name="tipo_procedimento" value="Ajuste Direto Regime Geral"> Ajuste Direto Regime Geral</label><br>
+        <label><input type="checkbox" name="tipo_procedimento" value="Ao abrigo de acordo-quadro"> Ao abrigo de acordo-quadro</label><br>
+        <label><input type="checkbox" name="tipo_procedimento" value="Contratação excluída II"> Contratação excluída II</label><br>
+        <label><input type="checkbox" name="tipo_procedimento" value="Concurso limitado por prévia qualificação"> Concurso limitado por prévia qualificação</label><br>
+        <label><input type="checkbox" name="tipo_procedimento" value="Setores especiais"> Setores especiais</label>
+    </fieldset>
+    <button type="submit" class="search-button">Pesquisar</button>
+</form>
+
+{% if resultados %}
+    <h3 class="results-title">Resultados</h3class>
+    <table border="1" class="results-table">
+        <tr>
+            <th>ID Contrato</th>
+            <th>Tipo de Procedimento</th>
+            <th>Procedimento Centralizado</th>
+        </tr>
+        {% for contrato in resultados %}
+        <tr>
+            <td><a href="{{ url_for('detalhes', id=contrato[0]) }}">{{ contrato[0] }}</a></td>
+            <td>{{ contrato[1] }}</td>
+            <td>{{ contrato[2] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p class="no-results">Nenhum resultado encontrado.</p>
+{% endif %}
+
+{% endblock %}

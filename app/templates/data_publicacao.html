@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Contratos Públicos 2024</h1>
+
+  <!-- Barra de navegação com botões -->
+  <nav>
+    <button><a href="/">Contratos</a></button>
+    <button><a href="/entidades">Entidades</a></button>
+    <button><a href="/tipos-de-procedimento">Tipo de Procedimento</a></button>
+    <button><a href="/datas">Datas</a></button>
+    <button><a href="/locais">Locais</a></button>
+    <button><a href="/questoes">Questões</a></button>
+    <button><a href="/Read Me">Read Me</a></button>
+  </nav>
+
+ <h2>Data de Publicação</h2>
+
+  <!-- Formulário de pesquisa -->
+  <form method="POST">
+    <label for="year">Ano:</label>
+    <input type="text" name="year" id="year" value="{{ year_filter }}" placeholder="Ex: 2024">
+    <button type="submit">Pesquisar</button>
+
+    {% if year_filter %}
+      <label for="month">Mês:</label>
+      <select name="month" id="month">
+        <option value="">Todos</option>
+        {% for mes in range(1, 13) %}
+          <option value="{{ "%02d"|format(mes) }}" {% if month_filter == "%02d"|format(mes) %}selected{% endif %}>
+            {{ "%02d"|format(mes) }}
+          </option>
+        {% endfor %}
+      </select>
+      <button type="submit">Filtrar</button>
+    {% endif %}
+
+    {% if month_filter %}
+      <label for="day">Dia:</label>
+      <select name="day" id="day">
+        <option value="">Todos</option>
+        {% for dia in range(1, 32) %}
+          <option value="{{ "%02d"|format(dia) }}" {% if day_filter == "%02d"|format(dia) %}selected{% endif %}>
+            {{ "%02d"|format(dia) }}
+          </option>
+        {% endfor %}
+      </select>
+      <button type="submit">Filtrar</button>
+    {% endif %}
+  </form>
+
+  <!-- Tabela de resultados -->
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Ano</th>
+        <th>Mês</th>
+        <th>Dia</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if tabela %}
+        {% for row in tabela %}
+          <tr>
+            <td><a href="/detalhes/{{ row['id'] }}">{{ row['id'] }}</a></td>
+            <td>{{ row['ano'] }}</td>
+            <td>{{ row['mes'] }}</td>
+            <td>{{ row['dia'] }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="4">Nenhum resultado encontrado.</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+{% endblock %}

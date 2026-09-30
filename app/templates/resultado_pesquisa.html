@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Contratos Públicos 2024</h1>
+
+<!-- Barra de navegação com botões -->
+<nav>
+  <button><a href="/">Contratos</a></button>
+  <button><a href="/entidades">Entidades</a></button>
+  <button><a href="/tipos-de-procedimento">Tipo de Procedimento</a></button>
+  <button><a href="/datas">Datas</a></button>
+  <button><a href="/locais">Locais</a></button>
+  <button><a href="/questoes">Questões</a></button>
+  <button><a href="/Read Me">Read Me</a></button>
+</nav>
+<h2>Resultado da Pesquisa</h2>
+
+{% if contrato %}
+  <table>
+    <tr>
+      <th>ID</th>
+      <td>{{ contrato['id'] }}</td>
+    </tr>
+     <tr>
+      <th>Objeto do Contrato</th>
+      <td>{{ contrato['objeto_contrato'] }}</td>
+    </tr>
+    <tr>
+      <th>Tipo de Contrato</th>
+      <td>{{ tc_str|safe }}</td>
+    </tr>
+     <tr>
+      <th>Preço</th>
+      <td>{{ contrato['preco'] }} € </td>
+    </tr>
+    <tr>
+      <th>Adjudicante</th>
+      <td>{{ contrato['adjudicante'] }} : {{ contrato['designacao'] }} , {{ contrato['tipo_juridico'] }}</td>
+    </tr>
+    <tr>
+      <th>Adjudicatários</th>
+      <td>{{ adju_str|safe }}</td>
+    </tr>
+    <tr>
+      <th>Locais</th>
+      <td>{{ loc_str|safe }}</td>
+    </tr>
+    <tr>
+      <th>Data de Publicação</th>
+      <td>{{ contrato['dia_publicacao'] }}/{{ contrato['mes_publicacao'] }}/{{ contrato['ano_publicacao'] }}</td>
+    </tr
+    <tr>
+      <th>Data de Celebração</th>
+      <td>{{ contrato['dia_celebracao'] }}/{{ contrato['mes_celebracao'] }}/{{ contrato['ano_celebracao'] }}</td>
+    </tr>
+    <tr>
+      <th>Prazo de Execução</th>
+      <td>{{ contrato['prazo_execucao'] }} dias</td>
+    </tr>
+    <tr>
+      <th>Tipo de Procedimento</th>
+      <td>{{ contrato['tipo_procedimento'] }}</td>
+    </tr>
+    <tr>
+      <th>Procedimento Centralizado</th>
+      <td>{{ contrato['procedimento_centralizado'] }}</td>
+    </tr>
+     <tr>
+      <th>CPV</th>
+      <td>{{ cpvs_str|safe }}</td>
+    </tr>
+    <tr>
+      <th>Fundamentação</th>
+      <td>{{ contrato['fundamentacao'] }}</td>
+    </tr>
+    <tr>
+      <th>Descrição Acordo-Quadro</th>
+      <td>{{ contrato['descr_acordo_quadro'] }}</td>
+    </tr>
+  </table>
+{% else %}
+  <p>Nenhum contrato encontrado com o ID fornecido.</p>
+{% endif %}
+
+<p><a href="/">Voltar à página inicial</a></p>
+
+{% endblock %}
